@@ -16,10 +16,10 @@ const Header = ({navigation}) => {
         // shadowOpacity: 1,
         backgroundColor: 'white',
       }}>
-      <Animatable.Text style={{fontSize: 15, fontWeight: 'bold', color: 'white',backgroundColor:'black',padding:5,borderWidth:2,borderColor:'pink', borderRadius:5 }}
-        animation='fadeInRight'
+      <Animatable.Text style={{fontSize: 15, fontWeight: 'bold', color: 'white',backgroundColor:'black',padding:5,borderWidth:2,borderColor:'pink', borderRadius:5, }}
+        animation='zoomInDown'
         duration={2000}
-        iterationCount={2}
+        iterationCount={1}
         
       >
         News-App

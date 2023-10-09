@@ -17,7 +17,7 @@ const Search = ({ navigation }) => {
     setSearchText(text);
     if (text.length >3) {
       const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=in&apiKey=9b2bec38269a4a7ab665833a16afe05f&q=${text}`
+        `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&q=${text}`
       );
 
       const data = await response.json();

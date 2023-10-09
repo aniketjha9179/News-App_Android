@@ -163,10 +163,11 @@ const HomeScreen = ({ navigation }) => {
   const getData = async () => {
     setLaoding(true);
     const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=9b2bec38269a4a7ab665833a16afe05f&category=${Category[Select].category}`
+      `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&category=${Category[Select].category}`
     );
 
     const data = await response.json();
+    // console.log(data);
     setData(data.articles);
     setLaoding(false);
   };
@@ -174,7 +175,7 @@ const HomeScreen = ({ navigation }) => {
   const getData2 = async (category) => {
     setLaoding(true);
     const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=9b2bec38269a4a7ab665833a16afe05f&category=${category}`
+      `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&category=${category}`
     );
 
     const data = await response.json();
