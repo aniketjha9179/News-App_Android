@@ -1,1 +1,2 @@
-![news](https://github.com/aniketjha9179/News-App_Android/assets/84675061/32abdcf5-3232-4d8f-a5ed-523721c5e078)
+
+![News app for android](https://github.com/aniketjha9179/News-App_Android/assets/84675061/a6679e14-9d5c-41ec-b2ac-282103f1c4cd)
