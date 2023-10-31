@@ -17,11 +17,12 @@ const Search = ({ navigation }) => {
     setSearchText(text);
     if (text.length >3) {
       const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&q=${text}`
+        `https://newsapi.org/v2/top-headlines?country=in&apiKey=aee91a03a07d41de8ba858192178dcc6&q=${text}`
       );
 
       const data = await response.json();
       setData(data.articles);
+      console.log(data.articles);
     }
   };
   return (

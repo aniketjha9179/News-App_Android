@@ -1,15 +1,25 @@
 
-// import { StyleSheet, Text, View, FlatList,TouchableOpacity } from 'react-native';
+
+// import {
+//   StyleSheet,
+//   Text,
+//   View,
+//   FlatList,
+//   TouchableOpacity,
+//   ActivityIndicator,
+// } from 'react-native';
 // import React, { useEffect, useState } from 'react';
 // import Header from './components/Header';
-// import Card from './components/Card';
+// import Card from  './components/Card';
 
-// const Homescreen = ({ navigation }) => {
+// const HomeScreen = ({ navigation }) => {
 //   const [Data, setData] = useState([]);
+//   const [Select, setSelect] = useState(0);
+//   const [Laoding, setLaoding] = useState(false);
 //   const [Category, setCategory] = useState([
 //     {
 //       id: 1,
-//       name: 'Top Headlines',
+//       name: 'Headlines',
 //       category: 'general',
 //     },
 //     {
@@ -42,25 +52,34 @@
 //       name: 'Technology',
 //       category: 'technology',
 //     },
+//     {
+//       id: 8,
+//       name: 'MobileApp',
+//       category: ',mobileapp',
+
+//     },
 //   ]);
 
-
 //   const getData = async () => {
-//     try {
-//       const response = await fetch(
-//         `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a`
-//       );
+//     setLaoding(true);
+//     const response = await fetch(
+//       `https://newsapi.org/v2/top-headlines?country=in&apiKey=aee91a03a07d41de8ba858192178dcc6&category=${Category[Select].category}`
+//     );
+//     const data = await response.json();
+//     // console.log(data);
+//     setData(data.articles);
+//     setLaoding(false);
+//   };
 
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
+//   const getData2 = async (category) => {
+//     setLaoding(true);
+//     const response = await fetch(
+//       `https://newsapi.org/v2/top-headlines?country=in&apiKey=aee91a03a07d41de8ba858192178dcc6&category=${category}`
+//     );
 
-//       const data = await response.json();
-//       setData(data.articles);
-//       console.log(data);
-//     } catch (error) {
-//       console.error('Error fetching data:', error);
-//     }
+//     const data = await response.json();
+//     setData(data.articles);
+//     setLaoding(false);
 //   };
 
 //   useEffect(() => {
@@ -68,43 +87,70 @@
 //   }, []);
 
 //   return (
-//     <View style={{ display:'flex' }}>
-//       <Header navigation={navigation} />
-      
-//     <View>
-//     <FlatList data={Category}
-//       horizontal
-//       showsHorizontalScrollIndicator={false}
-//       renderItem={(item, index)=>{
-//         return(
-//           <TouchableOpacity>
-//             <Text style={{color:'black'}}>
-//               {item.name}
-//             </Text>
-//           </TouchableOpacity>
-//         )
-//       }}
-//       />
-      
-       
-//     </View>
+//     <>
+//       {Laoding ? (
+//         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//           <ActivityIndicator color={'#0C2D48'} size={35} />
+//         </View>
+//       ) : (
+//         <View style={{ flex: 1 }}>
+//           <Header navigation={navigation} />
 
+//           <View style={{ paddingHorizontal: 10, paddingVertical: 2 }}>
+//             <FlatList
+//               data={Category}
+//               horizontal
+//               showsHorizontalScrollIndicator={false}
+//               renderItem={({ item, index }) => {
+//                 return (
+//                   <TouchableOpacity
+//                     style={{
+//                       paddingHorizontal: 5,
+//                       paddingVertical: 2,
+//                       marginRight: 3,
+//                       borderRadius: 4,
+//                       backgroundColor: index === Select ? '#0C2D48' : '#e0e0e0',
+//                     }}
+//                     onPress={() => {
+//                       setSelect(index);
+//                       getData2(Category[index].category);
+//                     }} 
+//                   >
+//                     <Text
+//                       style={{fontSize:17,
+                         
+//                         color: index === Select ? 'white' : '#666',
+//                         fontFamily: 'Regular',
+//                       }}
+//                     >
+//                       {item.name}
+//                     </Text>
+//                   </TouchableOpacity>
+//                 );
+//               }}
+//             />
+//           </View>
 
-//       <View>
-//         <FlatList
-//           data={Data}
-//           renderItem={({ item, index }) => {
-//             return <Card item={item} />;
-//           }}
-//         />
-//       </View>
-//     </View>
+//           <View style={{ marginBottom: 16 }}>
+//             <FlatList
+//               showsVerticalScrollIndicator={false}
+//               data={Data}
+//               renderItem={({ item, index }) => {
+//                 return <Card item={item} navigation={navigation} index={index} />;
+//               }}
+//             />
+//           </View>
+//         </View>
+//       )}
+//     </>
 //   );
 // };
 
-// export default Homescreen;
+// export default HomeScreen;
 
 // const styles = StyleSheet.create({});
+
+import axios from 'axios'; // Import Axios
 
 import {
   StyleSheet,
@@ -116,7 +162,7 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
-import Card from  './components/Card';
+import Card from './components/Card';
 
 const HomeScreen = ({ navigation }) => {
   const [Data, setData] = useState([]);
@@ -158,28 +204,42 @@ const HomeScreen = ({ navigation }) => {
       name: 'Technology',
       category: 'technology',
     },
+    {
+      id: 8,
+      name: 'MobileApp',
+      category: 'mobileapp', // Removed the comma
+    },
   ]);
 
   const getData = async () => {
     setLaoding(true);
-    const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&category=${Category[Select].category}`
-    );
 
-    const data = await response.json();
-    // console.log(data);
-    setData(data.articles);
+    try {
+      const response = await axios.get(
+        `https://newsapi.org/v2/top-headlines?country=in&apiKey=aee91a03a07d41de8ba858192178dcc6&category=${Category[Select].category}`
+      );
+
+      setData(response.data.articles);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
     setLaoding(false);
   };
 
   const getData2 = async (category) => {
     setLaoding(true);
-    const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=0d14a3366538438196e93f019274b02a&category=${category}`
-    );
 
-    const data = await response.json();
-    setData(data.articles);
+    try {
+      const response = await axios.get(
+        `https://newsapi.org/v2/top-headlines?country=in&apiKey=aee91a03a07d41de8ba858192178dcc6&category=${category}`
+      );
+
+      setData(response.data.articles);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
     setLaoding(false);
   };
 
@@ -215,11 +275,11 @@ const HomeScreen = ({ navigation }) => {
                     onPress={() => {
                       setSelect(index);
                       getData2(Category[index].category);
-                    }} 
+                    }}
                   >
                     <Text
-                      style={{fontSize:17,
-                         
+                      style={{
+                        fontSize: 17,
                         color: index === Select ? 'white' : '#666',
                         fontFamily: 'Regular',
                       }}
@@ -250,4 +310,3 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({});
-
